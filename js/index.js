@@ -2,8 +2,6 @@ let searchBtn = document.querySelector("#search-btn");
 let countryInp = document.querySelector("#country-inp");
 let result = document.querySelector(".result");
 
-console.log(result);
-
 searchBtn.addEventListener("click", () => {
   let countryName = countryInp.value;
   let finalURL = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
@@ -12,6 +10,7 @@ searchBtn.addEventListener("click", () => {
     .then((response) => response.json())
     .then((data) => {
       {
+        console.log(data);
         result.innerHTML = `
         <img src="${data[0].flags.svg}" class="flag-img">
         <h2>${data[0].name.common}</h2>
@@ -36,29 +35,26 @@ searchBtn.addEventListener("click", () => {
         <div class="wrapper">
             <div class="data-wrapper">
                 <h4>Currency:</h4>
-                <span>${
-                  data[0].currencies[Object.keys(data[0].currencies)].name
-                } - ${Object.keys(data[0].currencies)[0]}</span>
+                <span>${data[0].currencies[Object.keys(data[0].currencies)].name
+          } - ${Object.keys(data[0].currencies)[0]}</span>
             </div>
         </div>
         <div class="wrapper">
             <div class="data-wrapper">
                 <h4>Common Languages:</h4>
                 <span>${Object.values(data[0].languages)
-                  .toString()
-                  .split(",")
-                  .join(", ")}</span>
+            .toString()
+            .split(",")
+            .join(", ")}</span>
             </div>
         </div>`;
       }
     })
     .catch(() => {
       if (countryName.length == 0) {
-        {
-          result.innerHTML = `
-            <h3>Please enter a country name</h3>
-            `;
-        }
+        result.innerHTML = `
+        <h3>Please enter a country name</h3>
+        `;
       } else {
         result.innerHTML = `
             <h3>No country found</h3>
